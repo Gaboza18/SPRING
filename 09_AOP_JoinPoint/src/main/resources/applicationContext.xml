@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<context:component-scan
+		base-package="com.green.biz"></context:component-scan>
+
+	<!-- 어드바이스 등록 -->
+	<bean id="before_advice" class="com.green.biz.common.BeforeAdvice"></bean>
+	<bean id="after_returning"
+		class="com.green.biz.common.AfterReturningAdvice"></bean>
+	<bean id="after_throwing"
+		class="com.green.biz.common.AfterThrowAdvice"></bean>
+	<bean id="around_advice" class="com.green.biz.common.AroundAdvice"></bean>
+
+	<aop:config>
+
+		<!-- 포인트컷 정의 -->
+		<aop:pointcut id="getPointcut"
+			expression="execution(* com.green.biz..*Impl.get*(..))" />
+		<aop:pointcut id="allPointcut"
+			expression="execution(* com.green.biz..*Impl.*(..))" />
+
+		<!-- 애스펙트 정의 -->
+		<aop:aspect ref="before_advice">
+			<aop:before pointcut-ref="allPointcut" method="beforeLog" />
+		</aop:aspect>
+
+		<aop:aspect ref="after_returning">
+			<aop:after-returning pointcut-ref="getPointcut"
+				method="afterLog" returning="returnObj" /> <!-- returning="returnObj: 비즈니스 메소드가 리턴한 결과값을 returnObj라는 바인드 변수에 연결하라는 설정 -->
+		</aop:aspect>
+
+		<aop:aspect ref="after_throwing">
+			<aop:after-throwing pointcut-ref="allPointcut"
+				method="exceptionLog" throwing="exceptObj" /> <!-- throwing="exceptObj: 예외발생 객체를 바인드 하기위해 사용  -->
+		</aop:aspect>
+
+		<aop:aspect ref="around_advice">
+			<aop:around pointcut-ref="allPointcut" method="aroundLog" />
+		</aop:aspect>
+
+	</aop:config>
+
+</beans>

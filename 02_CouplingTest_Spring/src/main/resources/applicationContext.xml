@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<!-- bean의 고유 식별자 id, 패키지이름.클래스이름 class -->
+	<bean id="tv" class="polymorphism.SamsungTV" 
+	init-method="initMethod" destroy-method="destoryMethod" scope="prototype"/>
+	<!-- init-method: 객체생성후 초기화 작업, destory-method: 스트링 컨테이너가 객체 삭제 직전 호출 -->
+</beans>

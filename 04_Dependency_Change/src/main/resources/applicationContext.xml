@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 생성자 주입방식 <bean id="tv" class="com.green.biz.SamsungTV"> <constructor-arg 
+		ref="jbl"></constructor-arg> <constructor-arg value="2500000"></constructor-arg> 
+		</bean> <bean id="boss" class="com.green.biz.BoseSpeaker"></bean> <bean id="jbl" 
+		class="com.green.biz.JBLSpeaker"></bean> -->
+
+	<!-- Setter 주입방식 <bean id="tv" class="com.green.biz.SamsungTV"> <property 
+		name="speaker" ref="bose"></property> <property name="price" value="2500000"></property> 
+		</bean> <bean id="boss" class="com.green.biz.BoseSpeaker"></bean> <bean id="jbl" 
+		class="com.green.biz.JBLSpeaker"></bean> -->
+
+	<!-- p 네임 스페이스 사용 -->
+
+	<bean id="tv" class="com.green.biz.SamsungTV" p:speaker-ref="jbl"
+		p:price="2500000"></bean>
+
+	<bean id="boss" class="com.green.biz.BoseSpeaker"></bean>
+	<bean id="jbl" class="com.green.biz.JBLSpeaker"></bean>
+
+	<!-- 컬렉션 객체의 의존성 주입 -->
+	<bean id="CollectionBean"
+		class="collection.injection.CollectionBean">
+
+		<!-- List 타입 -->
+		<property name="addressList"> <!-- setter 주입방식 -->
+			<list>
+				<value>서울시 강남구 역삼동</value>
+				<value>대전시 유성구 유성동</value>
+			</list>
+		</property>
+
+		<!-- SET 타입 -->
+		<property name="movieList">
+			<set value-type="java.lang.String">
+				<value>스파이더맨:노웨이 홈</value>
+				<value>킹스맨:퍼스트 에이전트</value>
+				<value>해피 뉴 이어</value>
+				<value>매트릭스:리저렉션</value>
+			</set>
+		</property>
+		
+		<!-- Map 타입 -->
+		<property name="prefList">
+			<map>
+				<entry>
+					<key><value>국어</value></key>
+					<value>90</value>
+				</entry>
+				
+				<entry>
+					<key><value>수학</value></key>
+					<value>85</value>
+				</entry>
+			</map>
+		</property>
+		
+		<!-- Properties 타입 -->
+		<property name="propList">
+			<props>
+				<prop key="username">이순신</prop>
+				<prop key="password">1234</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

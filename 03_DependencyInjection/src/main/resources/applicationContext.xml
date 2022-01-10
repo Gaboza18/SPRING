@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+		<!-- 삼성 TV 객체에서 BOSE 객체,가격객체 사용 -->
+		
+	<bean id="tv" class="com.green.biz.SamsungTV">
+		
+		<!-- index 속성을 사용하여 파라미터 순서 변경 -->
+		<constructor-arg index="1" value="2500000"></constructor-arg>
+		<constructor-arg index="0" ref="bose"></constructor-arg>
+		
+	</bean>
+	
+	<bean id="bose" class="com.green.biz.BoseSpeaker"></bean>
+	 
+</beans>
