@@ -10,7 +10,6 @@
 	
 	<!-- 파일 업로드 프로그램 bean 객체로 등록 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- value="-1" 파일크기 무제한 -->
 		<property name="maxUploadSize" value="-1"></property> 
 	</bean>
 </beans>

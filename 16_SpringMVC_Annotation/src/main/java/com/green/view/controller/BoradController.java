@@ -1,5 +1,7 @@
 package com.green.view.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.green.biz.board.BoardService;
-import com.green.biz.dto.BoardDAO;
 import com.green.biz.dto.BoardVO;
 
 /*
@@ -23,19 +24,26 @@ import com.green.biz.dto.BoardVO;
 @Controller
 @SessionAttributes("board")
 public class BoradController {
-	
-	@Autowired 
+
+	@Autowired
 	private BoardService boardService;
 
 	/* 게시글 등록 */
 	@RequestMapping(value = "/insertBoard.do") // client 화면에서 "/insertBoard.do"라는 요청이 들어오면 아래의 메소드 수행설정
 	// 스프링 컨테이너가 insertBoard() 메소드를 실행할때 Command 객체를 생성하여 사용자가 입력한 값을 설정하여 넘겨준다
-	public String insertBoard(BoardVO vo, BoardDAO boardDAO) { // BoardVO command 객체 등록
+	public String insertBoard(BoardVO vo)throws IllegalStateException, IOException  { // BoardVO command 객체 등록
 
 		System.out.println("게시글 등록처리");
 
+		// 업로드 파일 처리
+		MultipartFile uploadFile = vo.getUploadFile();
+		if (!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();
+			uploadFile.transferTo(new File("C:/Users/ssych/SPRING-workspace/upload/"+fileName));
+		}
+
 		// 2. DB 연동 처리
-		boardDAO.insertBoard(vo);
+		boardService.insertBoard(vo);
 
 		return "getBoardList.do";
 
@@ -50,11 +58,11 @@ public class BoradController {
 	 */
 
 	@RequestMapping(value = "/updateBoard.do")
-	public String updateBoard(@ModelAttribute("board") BoardVO vo, BoardDAO boardDao) {
+	public String updateBoard(@ModelAttribute("board") BoardVO vo) {
 		System.out.println("게시글 수정처리");
 		System.out.println("작성자 이름: " + vo.getWriter());
 
-		boardDao.updateBoard(vo);
+		boardService.updateBoard(vo);
 
 		// 수정작업후 게시물 리스트 화면 출력
 		return "getBoardList.do";
@@ -62,23 +70,23 @@ public class BoradController {
 
 	/* 게시글 삭제 */
 	@RequestMapping(value = "/deleteBoard.do")
-	public String deleteBoard(BoardVO vo, BoardDAO boardDao) {
+	public String deleteBoard(BoardVO vo) {
 
 		System.out.println("게시글 삭제처리");
 
-		boardDao.deleteBoard(vo);
+		boardService.deleteBoard(vo);
 
 		return "getBoardList.do";
 	}
 
 	/* 게시글 상세 조회 */
 	@RequestMapping(value = "/getBoard.do")
-	public String getBoard(BoardVO vo, BoardDAO boardDao, Model model) {
+	public String getBoard(BoardVO vo, Model model) {
 
 		System.out.println("게시글 상세조회 처리");
 
 		// 게시글 번호 입력값 추출
-		BoardVO board = boardDao.getBoard(vo);
+		BoardVO board = boardService.getBoard(vo);
 
 		// 응답화면 구성
 		model.addAttribute("board", board);
@@ -112,7 +120,7 @@ public class BoradController {
 			// @RequestParam(value = "searchKeyword", defaultValue = "", required = false)
 			// String keyword,
 
-			BoardVO vo, BoardDAO boardDao, Model model) {
+			BoardVO vo, Model model) {
 
 		System.out.println("게시글 목록조회 처리");
 

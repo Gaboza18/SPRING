@@ -75,6 +75,14 @@ public class BoardVO {
 		this.searchCondition = searchCondition;
 	}
 
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
