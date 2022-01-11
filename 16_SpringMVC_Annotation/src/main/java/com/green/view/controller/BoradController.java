@@ -31,7 +31,7 @@ public class BoradController {
 	/* 게시글 등록 */
 	@RequestMapping(value = "/insertBoard.do") // client 화면에서 "/insertBoard.do"라는 요청이 들어오면 아래의 메소드 수행설정
 	// 스프링 컨테이너가 insertBoard() 메소드를 실행할때 Command 객체를 생성하여 사용자가 입력한 값을 설정하여 넘겨준다
-	public String insertBoard(BoardVO vo)throws IllegalStateException, IOException  { // BoardVO command 객체 등록
+	public String insertBoard(BoardVO vo) throws IllegalStateException, IOException { // BoardVO command 객체 등록
 
 		System.out.println("게시글 등록처리");
 
@@ -39,7 +39,7 @@ public class BoradController {
 		MultipartFile uploadFile = vo.getUploadFile();
 		if (!uploadFile.isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();
-			uploadFile.transferTo(new File("C:/Users/ssych/SPRING-workspace/upload/"+fileName));
+			uploadFile.transferTo(new File("C:/Users/ssych/SPRING-workspace/upload/" + fileName));
 		}
 
 		// 2. DB 연동 처리
