@@ -2,8 +2,6 @@ package com.green.biz.dto;
 
 import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /*
  *  DB board 테이블의 컬럼값
  */
@@ -15,9 +13,6 @@ public class BoardVO {
 	private String content; // 게시판 내용
 	private Date regDate; // 게시판 작성시간(시스템 상 시간을 적용한다)
 	private int cnt; // 게시판 조회수
-	private String searchCondition; // 게시물 검색 조건
-	private String searchKeyword; // 게시물 조건 키워드
-	private MultipartFile uploadFile; // 파일 업로드
 
 	public int getSeq() {
 		return seq;
@@ -67,35 +62,10 @@ public class BoardVO {
 		this.cnt = cnt;
 	}
 
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
-	}
-
-	public MultipartFile getUploadFile() {
-		return uploadFile;
-	}
-
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
-	}
-
-	public String getSearchKeyword() {
-		return searchKeyword;
-	}
-
-	public void setSearchKeyword(String searchKeyword) {
-		this.searchKeyword = searchKeyword;
-	}
-
 	@Override
 	public String toString() {
 		return "BoardVO [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regDate="
-				+ regDate + ", cnt=" + cnt + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", uploadFile=" + uploadFile + "]";
+				+ regDate + ", cnt=" + cnt + "]";
 	}
 
 }

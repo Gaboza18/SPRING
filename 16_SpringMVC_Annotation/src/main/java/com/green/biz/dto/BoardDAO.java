@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.green.biz.common.JDBCUtil;
 
+
 @Repository("boardDao")
 public class BoardDAO {
 
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	Connection conn = null; 
+	PreparedStatement pstmt = null; 
+	ResultSet rs = null; 
 
 	// SQL 명령문
 
@@ -29,22 +30,14 @@ public class BoardDAO {
 	private static final String BOARD_GET = "SELECT * FROM board WHERE seq=?";
 
 	// 전체조회
-	// private static final String BOARD_LIST = "SELECT * FROM board ORDER BY seq
-	// DESC";
+	private static final String BOARD_LIST = "SELECT * FROM board ORDER BY seq DESC";
 
-	// 제목으로 조회
-	private static final String BOARD_LIST_T = "SELECT * FROM board WHERE title LIKE '%' || ? || '%' ORDER BY seq DESC";
-
-	// 내용으로 조회
-	private static final String BOARD_LIST_C = "SELECT * FROM board WHERE content LIKE '%' || ? || '%' ORDER BY seq DESC";
-
-	public BoardDAO() { // 기본생성자
+	public BoardDAO() { // 湲곕낯�깮�꽦�옄
 	}
-
+	
 	/*
-	 * 게시물 CRUD
+	 * 寃뚯떆�뙋 �엯�젰�븯�뒗 硫붿냼�뱶
 	 */
-
 	public void insertBoard(BoardVO board) {
 
 		System.out.println("===> JDBC로 insertBoard() 실행");
@@ -119,7 +112,7 @@ public class BoardDAO {
 
 			conn = JDBCUtil.getConnection();
 			pstmt = conn.prepareStatement(BOARD_GET);
-
+			
 			pstmt.setInt(1, vo.getSeq());
 
 			rs = pstmt.executeQuery();
@@ -144,22 +137,16 @@ public class BoardDAO {
 		return board;
 	}
 
-	public List<BoardVO> getBoardList(BoardVO vo) {
+	public List<BoardVO> getBoardList() {
 
 		List<BoardVO> boardList = null;
 		System.out.println("===> JDBC로 getBoardList() 실행");
-
+		
 		try {
 
 			conn = JDBCUtil.getConnection();
+			pstmt = conn.prepareStatement(BOARD_LIST);
 
-			if (vo.getSearchCondition().equals("TITLE")) {
-				pstmt = conn.prepareStatement(BOARD_LIST_T);
-			} else if (vo.getSearchCondition().equals("CONTENT")) {
-				pstmt = conn.prepareStatement(BOARD_LIST_C);
-			}
-
-			pstmt.setString(1, vo.getSearchKeyword()); // SQL 검색어 설정
 			rs = pstmt.executeQuery();
 
 			boardList = new ArrayList<>();

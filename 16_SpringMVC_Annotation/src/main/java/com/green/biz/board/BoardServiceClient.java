@@ -36,8 +36,8 @@ public class BoardServiceClient {
 		boardDelete.setSeq(510);
 		boardService.deleteBoard(boardDelete);
 		*/
-		BoardVO vo1 = new BoardVO();
-		List<BoardVO> boardList = boardService.getBoardList(vo1);
+		
+		List<BoardVO> boardList = boardService.getBoardList();
 
 		for (BoardVO vo : boardList) {
 			System.out.printf("%3d. 力格: %s  累己磊:%s  累己老:%s\n 郴侩:%s\n\n", vo.getSeq(), vo.getTitle(), vo.getWriter(),
