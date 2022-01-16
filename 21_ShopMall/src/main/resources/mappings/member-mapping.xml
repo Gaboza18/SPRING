@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappings.member-mapping">
+	
+	<!-- resultType = sql-map-config에 등록한다 -->
+	
+	<!-- 회원 id를 조건으로 회원조회 -->
+	<select id="getMember" resultType="member">
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+
+	<!-- 회원 존재 여부확인 -->
+	<select id="confirmID" resultType="String">
+		SELECT pwd FROM member WHERE id=#{id}
+	</select>
+
+	<!-- 회원 등록 -->
+	<insert id="insertMember">
+		INSERT INTO member (id, pwd, name, email,zip_num, address, phone) 
+			VALUES(#{id},#{pwd},#{name},#{email},#{zip_num},#{address},#{phone})
+	</insert>
+
+</mapper>
+

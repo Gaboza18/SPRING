@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public class BookDAO {
 
 	@Autowired
-	private JdbcTemplate jdbcTemplate = null;
+	private JdbcTemplate jdbcTemplate;
 
 	private static final String BOOK_INSERT = "INSERT INTO books(item_id,category,name,author,price,publiser,image_url,notes,is_recommended,rating)"
 			+ "VALUES(seq_item_id.NEXTVAL,?,?,?,?,?,?,?,?,?)";
@@ -36,7 +36,11 @@ public class BookDAO {
 
 	public List<BookVO> getBookList() {
 
-		return jdbcTemplate.query(BOOK_LIST, new BookRowMapper());
+		if (jdbcTemplate == null) {
+			System.out.println("jdbcTemplate is null");
+		}
+		List<BookVO> bookList = jdbcTemplate.query(BOOK_LIST, new BookRowMapper());
+		return bookList;
 
 	}
 
@@ -56,6 +60,8 @@ public class BookDAO {
 			book.setImage_url(rs.getString("image_url")); // 이미지 URL
 			book.setNotes(rs.getString("notes")); // 요약정보
 			book.setRating(rs.getInt("rating")); // 추천
+			
+			System.out.println(book);
 
 			return book;
 		}

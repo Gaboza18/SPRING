@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.green.biz.common.JDBCUtil;
 import com.green.biz.dto.BoardVO;
 
-@Repository("boardDAO")
+// @Repository("boardDAO")
 public class BoardDAO extends SqlSessionDaoSupport{
 
 	/*

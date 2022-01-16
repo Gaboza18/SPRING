@@ -50,7 +50,13 @@
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
-	</bean>	
+	</bean>
+	
+	<!-- SqlSessionTemplate 등록 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"></constructor-arg>
+	</bean>
+		
 </beans>
 
 

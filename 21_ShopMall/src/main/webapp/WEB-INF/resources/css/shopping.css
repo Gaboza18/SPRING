@@ -1,0 +1,360 @@
+body{
+    background-color:#B96DB5;
+    margin:0;
+    padding:0;
+    font-size:0.75em;
+}
+
+#wrap{
+    width:971px; /* 媛� �쎒 �럹�씠吏� �겕湲곗뿉 留욊쾶 �궗�씠利� 議곗젙 */
+    text-align:left;
+    margin:0;
+    margin-right:auto;
+    margin-left:auto;
+    background-color:#B96DB5;
+    background-repeat:repeat-y;    
+    min-height:780px;
+}
+
+.clear{clear:both;}
+
+#logo{
+    float:left;
+    width:180px;
+    height:100px;
+    margin:40px 0 0 40px;
+}
+
+nav#catagory_menu{
+	float:right;
+    margin:20px 64px 0 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table#cartList {
+    border-collapse:collapse;    /* border �궗�씠�쓽 媛꾧꺽 �뾾�빊 */
+    border-top: 2px solid  #333;    
+    border-bottom: 1px solid  #333; 
+    width:100%;                  /* �쟾泥� �뀒�씠釉� 湲몄씠 �꽕�젙 */
+    margin-bottom: 20px;
+}
+
+table#cartList th, td{	
+    border-bottom: 1px dotted  #333; 
+	text-align: center;
+}
+
+nav#catagory_menu ul{
+    list-style:none; 
+}
+
+nav#catagory_menu ul li{
+	display:block; 
+    height:30px;
+    float:left;
+    font-family: 援대┝;
+}
+
+nav#catagory_menu a{
+    text-decoration:none;
+    display:inline-block;
+    width: 80px;
+    text-align: center;
+    color: #CCC;
+    font-weight: bold;
+}
+
+nav#catagory_menu a:hover{
+    color: #F90;
+    font-weight: bold;
+}
+
+nav#top_menu{
+    margin: 20px 0;
+    float:right;
+}
+
+nav#top_menu ul{
+    list-style:none;
+    font-family:Verdana;
+}
+nav#top_menu ul li{
+   float:left;
+   margin:0 15px;  
+   font-size: 14pt; 
+}
+
+nav#top_menu a{
+	display:block; 
+    height:20px;
+    text-decoration:none;
+    color:#fff;
+    padding: 10px;
+}
+
+nav#top_menu a:hover{
+    background-image:url(../images/purple.gif);
+    background-repeat:repeat-x;
+    background-position:bottom;
+}
+
+article h1, div h1 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 45px;
+	color: #CCC;
+	margin: 20px 0;
+	font-weight: normal;
+}
+
+article h2, div h2{
+	font-family: "Times New Roman", Times, serif;
+	font-size: 30px; 
+	color: #CCC;
+	padding-bottom: 15px;
+	border-bottom: 1px dotted #666; /* �젣紐� �븯�떒 遺��뿉 �젏�꽑�쓣 �꽔�뼱 �젣紐⑹씠�씪�뒗 寃껋쓣 �몴�떆�빐 以띾땲�떎. */	
+}
+
+
+#bestProduct{
+    border:solid 1px #FFFFFF;
+    border-radius:10px;
+    width:910px;
+    min-height:260px;
+    background:#ebebeb;
+    padding:10px;
+    text-align: center;    
+}
+
+#kindProduct{
+    border:solid 1px #FFFFFF;
+    border-radius:10px;
+    width:610px;   
+    min-height:900px; 
+    background:#ebebeb;
+    padding:10px;
+    text-align: center;
+}
+
+#item{
+    width:200px;
+    float:left; margin: 0 13px;
+    text-align: center;
+}
+
+#item img{
+	width: 190px; 
+	height : 200px; 
+}
+
+#itemdetail  img{
+	width: 190px; 
+	height : 200px; 
+	margin-right: 20px;
+}
+
+a{
+    color:#F00;
+    text-decoration:none;
+}
+a:hover{
+    color:#F90;
+    text-decoration:underline;
+}
+
+#pname {
+	font-size: 20px; 
+	border-bottom: 1px dotted #666; 
+	padding: 5px 0; 
+}
+
+footer {
+	margin:10px 0 0 0;
+	height:50px;
+	background-image: url(../images/under_logo.gif);
+	background-repeat: no-repeat;
+	background-position: 40px center;	
+}
+
+footer #copy {
+	margin: 20px 0 10px 300px;
+	width:600px;	
+	float:left;	
+}
+
+#main_img{
+	text-align: center;
+} 
+#main_img img{
+    margin:9px 0 0 0; 
+}
+
+div#front{
+    margin:5px 0 5px 20px;
+}
+
+#sub_img {
+	text-align: center;
+}
+
+#sub_img img {
+	margin: 9px 0 0 0;
+}
+
+#sub_menu {
+	width: 250x;
+	float: left;
+	margin: 20px 0;
+}
+
+#sub_menu ul {
+	margin: 20px 0 0 16px;
+	list-style: none;
+}
+
+#sub_menu a {
+	text-decoration: none;
+	color: white; font-family: Arial, Helvetica, sans-serif;
+	font-weight:bold; font-size:16px;
+	display: block;
+	height: 15px;
+	width: 160px;
+	padding: 7px;
+	border-bottom: 1px dotted #999;
+	background-image: url(../images/bullet.gif);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+#sub_menu a:hover {
+	background-image: url(../images/bullet_orange.gif);
+	background-repeat: no-repeat; 
+	background-position: right center;
+	color: #F90;font-weight:bold; font-size:16px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+article {
+	float: right;
+	width: 680px;
+	padding-right: 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 1em;
+	line-height: 1.5em; 
+}
+
+article p {
+	padding-left: 10px;
+}
+
+article table#notice {
+	width: 670px;
+	border-collapse: collapse;
+	border-top: 1px solid #999;
+}
+
+article table#notice th {
+	height: 20px;
+	width: 70px;
+	font-size: 14px; 
+	font-weight: bold;
+	padding: 5px; 
+	color: #FFF;
+	border-bottom: 1px dotted #999;
+}
+
+article table#notice td {
+	text-align: left;
+	padding: 6px 0;
+	border-bottom: 1px dotted #999;
+}
+
+article table#notice tr:hover {
+	background-color: #DDF;
+	cursor: pointer;
+	color: red;
+}
+
+form {
+	margin: 10px 0 0 0;
+	width: 670px;
+}
+
+form fieldset {
+	padding: 10px 0 20px 5px;
+	border: none;
+}
+
+form fieldset legend {
+	font-size: 20px; /* �젣紐⑹쑝濡� �궗�슜�릺湲� �븣臾몄뿉 �겕湲곕�� �겕寃� �옟�븘 以띾땲�떎. */
+	border-bottom: 1px dotted #666; /* �젣紐� �븯�떒 遺��뿉 �젏�꽑�쓣 �꽔�뼱 �젣紐⑹씠�씪�뒗 寃껋쓣 �몴�떆�빐 以띾땲�떎. */
+	width: 600px; /* �쟾泥� �겕湲곕�� �옟�븘 以띾땲�떎. */
+	padding: 5px 0; /* �쐞�� �븘�옒濡� �뿬諛깆쓣 二쇨퀬 醫뚯슦濡쒕뒗 �뿬諛깆쓣 �뾾�븷踰꾨┰�땲�떎. 
+                                      �뿬諛깆쓣 �븞 二쇨쾶 �릺硫� 諛묒쨪怨� �꼫臾� 遺숈뼱踰꾨젮 蹂닿린�뿉 醫뗭� �븡�뒿�땲�떎. */
+}
+
+form label {
+	width: 140px; /* �쟾泥댁쓽 �겕湲곕�� �젙�쓽�빀�땲�떎. */
+	float: left; /* �쇊履쎌쑝濡� �씠�룞�떆�궢�땲�떎. */
+	margin: 5px 0; /* 留덉쭊�쓣 �씠�슜�빐�꽌 �긽�븯濡� 媛꾧꺽�쓣 以띾땲�떎. */
+}
+
+form input {
+	margin: 5px 0; /* label怨� 留덉갔媛�吏�濡� �뿬湲곕룄 �룞�씪�븯寃� �긽�븯濡� 媛꾧꺽�쓣 以띾땲�떎. */
+	border: 1px solid #999; /* input 諛뺤뒪�쓽 �뀒�몢由� 紐⑥뼇�쓣 �젙�쓽�빐 以띾땲�떎. */
+	background-color: #FCFDEA; /* 諛곌꼍�깋�쓣 �씠�슜�븯�뿬 諛뷀깢�솕硫� �깋怨� 李⑤퀎�쓣 以띾땲�떎. */
+}
+
+form input.id {
+	width: 100px;
+	height: 18px;
+}
+
+form input.dup {
+	width: 90px; /* 踰꾪듉�쓽 媛�濡� �겕湲곕�� �젙�빀�땲�떎. */
+	height: 23px; /* 踰꾪듉�쓽 �꽭濡� �겕湲곕�� �젙�빀�땲�떎. */
+	border-radius: 8px; /* border-radius �넻�빐 �뫁洹몃윴 踰꾪듉�쑝濡� 留뚮벊�땲�떎. */
+	border: none; /* 諛곌꼍 �씠誘몄�媛� �뼱�몼湲� �븣臾몄뿉 �뿬湲곗꽌 border�뒗 �뾾�븷踰꾨━寃좎뒿�땲�떎. */
+	margin: 0 0 0 5px; /* 留덉쭊�쓣 �쇊履쎈쭔 以섏꽌 input怨쇱쓽 媛꾧꺽�쓣 踰뚮┰�땲�떎. */
+	font-weight: bold; /* 湲�瑗� �몢猿섎�� �몢猿띻쾶 */
+	color: #FFF; /* 湲�瑗댁쓽 �깋�긽�� �씛�깋�쑝濡� */
+	background-image: url(../images/dup.jpg);
+	/* 諛깃렇�씪�슫�뱶 �씠誘몄�瑜� �궗�슜�빀�땲�떎. */
+	background-repeat: repeat-x; /* 諛깃렇�씪�슫�뱶 �씠誘몄�瑜� x異뺤쑝濡� 諛섎났 */
+	background-position: center center; /* 諛깃렇�씪�슫�뱶 �씠誘몄��쓽 �쐞移섎�� 以묒븰�쑝濡� �쐞移� */
+}
+
+form #buttons {
+	margin: 20px 0 0 0;
+}
+
+form  .submit,form  .cancel {
+	height: 30px; /* 踰꾪듉�쓽 �꽭濡� �겕湲곕�� �젙�쓽�빀�땲�떎. */
+	width: 150px; /* 踰꾪듉�쓽 媛�濡� �겕湲곕�� �젙�쓽�빀�땲�떎. */
+	border: 1px solid #666; /* 踰꾪듉�쓽 �뀒�몢由щ�� �젙�쓽�빀�땲�떎. */
+	border-radius: 10px; /* border-radius瑜� �넻�빐 踰꾪듉�쓣 �뫁洹몃젃寃� 留뚮벊�땲�떎. */
+	box-shadow: 3px 3px 2px #ccc; /* box-shadow瑜� �씠�슜�빐�꽌 洹몃┝�옄瑜� 留뚮벊�땲�떎. */
+	font-size: 14px; /* 湲�瑗� �궗�씠利덈�� 議곗젅�빀�땲�떎. */
+	background-repeat: repeat-x;
+	background-position: center center;
+	color: #fff;
+	margin: 0 0 0 20px;
+}
+
+form  .submit {
+	background-image: url(../images/submit_back.jpg);
+}
+
+form  .cancel {
+	background-image: url(../images/cancel_back.jpg);	
+}
+
+#comment_item {
+	width: 650px;
+	padding: 5px;
+	margin: 10px 0;
+	border-bottom: 1px solid #ccc;
+}
+
+#write_date {
+	margin-left: 30px;
+}

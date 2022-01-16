@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.biz.board.BoardService;
-import com.green.biz.dao.BoardDAO;
+import com.green.biz.dao.BoardDAO2;
 import com.green.biz.dto.BoardVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	private BoardDAO boardDao;
+	// private BoardDAO boardDao;
+	private BoardDAO2 boardDao;
 	
 	public BoardServiceImpl() { }
 	
