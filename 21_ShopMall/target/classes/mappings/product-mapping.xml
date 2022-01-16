@@ -2,24 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappings.product-mapping">
 
-	<!-- 신상품  조회  -->
+	<!-- 신상품 조회 -->
 	<select id="getNewProductList" resultType="product">
+
+		<!-- new_pro_view: 신상품 조회하는 sql문 view로 작성 -->
+
+		<!-- CREATE OR REPLACE VIEW new_pro_view AS 
+			 SELECT pseq, name, price2, image 
+			 FROM(SELECT row_number() OVER(ORDER BY regdate)row_num,pseq, name, price2,image 
+					FROM product 
+						WHERE useyn = 'y') 
+			 WHERE row_num <=4; -->
+
 		SELECT * FROM new_pro_view
 	</select>
-	
+
 	<!-- 베스트 상품 조회 -->
 	<select id="getBestProductList" resultType="product">
+
+		<!-- best_pro_view: 베스트 상품을 조회하는 sql문 view로 작성 -->
+
+		<!-- CREATE OR replace view best_pro_view AS 
+			 SELECT pseq, name, price2, image 
+			 FROM(SELECT row_number() OVER(ORDER BY regdate)row_num,pseq, name, price2,image 
+					FROM product 
+						WHERE bestyn = 'y') 
+			 WHERE row_num <=4; -->
+
 		SELECT * FROM best_pro_view
 	</select>
-	
-	<!-- 상품번호로 하나의  상품 조회하기-->
+
+	<!-- 상품번호로 하나의 상품 조회하기 -->
 	<select id="getProduct" resultType="product">
 		SELECT * FROM product WHERE pseq=#{pseq} <!-- #{파라미터 값} -->
 	</select>
-	
+
 	<!-- 카테고리별 상품 이름순으로 조회 -->
 	<select id="getProductListByKind" resultType="product">
-		SELECT * FROM product WHERE kind=#{kind} ORDER BY name
+		SELECT * FROM
+		product WHERE kind=#{kind} ORDER BY name
 	</select>
-	
+
 </mapper>

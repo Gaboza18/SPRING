@@ -20,10 +20,12 @@ import com.green.biz.product.ProductService;
 public class HomeController {
 	
 	@Autowired
-	private ProductService productService;
+	private ProductService productService; // productService 생성
+	
 	/**
 	 * index.html에서 메인화면 표시를 위한 index URL 요청처리
 	 */
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String home(Model model) {
 		
@@ -35,7 +37,7 @@ public class HomeController {
 		List<ProductVO> bestProdList = productService.getBestProductList();
 		model.addAttribute("bestProductList", bestProdList);
 		
-		return "index";
+		return "index"; // index.jsp 화면을 호출
 	}
 	
 }

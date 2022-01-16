@@ -12,8 +12,8 @@ import com.green.biz.dto.ProductVO;
 public class ProductDAO {
 	
 
-	@Autowired
-	private SqlSessionTemplate mybatis;
+	@Autowired // applicationContext.xml에 설정한 객체
+	private SqlSessionTemplate mybatis; 
 
 	// 신상품 조회
 	public List<ProductVO> getNewProductList() {

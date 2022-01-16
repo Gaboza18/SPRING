@@ -9,6 +9,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
+	<!-- 백 엔드 제어하기 위한 컨테이너 설정 -->
+	
 	<context:component-scan
 		base-package="com.green.biz"></context:component-scan>
 
@@ -37,7 +39,5 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sessionFactory"></constructor-arg>
 	</bean>
-	
-	
 	
 </beans>

@@ -18,6 +18,7 @@ public class ProductController {
 
 	// @RequestMapping(value="/product_detail", method=RequestMethod.GET) =
 	// @GetMapping(value="/product_detail")
+	
 	@GetMapping(value = "/product_detail") // get방식으로 들어오는 요청값
 	public String productDetailAction(ProductVO vo, Model model) {
 
@@ -30,13 +31,13 @@ public class ProductController {
 		return "product/productDetail"; // 상세보기.jsp 경로
 	}
 
-	@GetMapping(value = "/category")
+	@GetMapping(value = "/category") // get방식으로 들어오는 요청값
 	public String productKindAction(ProductVO vo, Model model) {
 
 		List<ProductVO> listProduct = productService.getProductListByKind(vo);
 
 		model.addAttribute("productKindList", listProduct);
 		
-		return "product/productKind";
+		return "product/productKind"; // 분류별 상품목록 화면 보이기.jsp 경로
 	}
 }
