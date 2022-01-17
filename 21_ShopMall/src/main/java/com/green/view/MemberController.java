@@ -1,11 +1,14 @@
 package com.green.view;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.green.biz.dto.AddressVO;
 import com.green.biz.dto.MemberVO;
 import com.green.biz.member.MemberService;
 
@@ -72,8 +75,32 @@ public class MemberController {
 	@PostMapping(value="/join")
 	public String joinAction(MemberVO vo) {
 		
+		vo.setAddress("");
 		memberService.insertMember(vo);
 		
 		return "member/login";
+	}
+	
+	/*
+	 *  우편번호, 주소찾기 화면 출력
+	 */
+	@GetMapping(value="/find_zip_num")
+	public String findZipNumView() {
+		
+		return "member/findZipNum";
+		
+	}
+	
+	/*
+	 *  동이름으로 주소 찾기
+	 */
+	@PostMapping(value="/find_zip_num")
+	public String findZipNumAction(AddressVO vo, Model model) {
+		
+		List<AddressVO> addrList = memberService.selectAddressByDong(vo.getDong());
+		
+		model.addAttribute("addressList",addrList);
+		
+		return "member/findZipNum";
 	}
 }

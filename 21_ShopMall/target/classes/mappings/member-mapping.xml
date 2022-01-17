@@ -19,6 +19,11 @@
 		INSERT INTO member (id, pwd, name, email,zip_num, address, phone) 
 			VALUES(#{id},#{pwd},#{name},#{email},#{zip_num},#{address},#{phone})
 	</insert>
+	
+	<!-- 동이름으로 주소 찾기 -->
+	<select id="selectAddressByDong" resultType="address"> 
+		SELECT * FROM address WHERE dong LIKE '%'||#{dong}||'%'
+	</select>
 
 </mapper>
 

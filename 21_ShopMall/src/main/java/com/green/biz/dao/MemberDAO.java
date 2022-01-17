@@ -1,9 +1,12 @@
 package com.green.biz.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.green.biz.dto.AddressVO;
 import com.green.biz.dto.MemberVO;
 
 @Repository // 스프링 객체로 등록
@@ -36,5 +39,10 @@ public class MemberDAO {
 	// 회원 등록
 	public void insertMember(MemberVO vo) {
 		mybatis.insert("mappings.member-mapping.insertMember", vo);
+	}
+	
+	// 동 이름으로 주소 찾기
+	public List<AddressVO> selectAddressByDong(String dong) {
+		return mybatis.selectList("mappings.member-mapping.selectAddressByDong", dong);
 	}
 }

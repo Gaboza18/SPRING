@@ -1,5 +1,8 @@
 package com.green.biz.member;
 
+import java.util.List;
+
+import com.green.biz.dto.AddressVO;
 import com.green.biz.dto.MemberVO;
 
 public interface MemberService {
@@ -11,5 +14,7 @@ public interface MemberService {
 
 	// 회원 등록
 	void insertMember(MemberVO vo);
-
+	
+	// 동이름으로 주소 찾기
+	public List<AddressVO> selectAddressByDong(String dong);
 }

@@ -74,3 +74,13 @@ function go_save() {
 
 }
 
+/*
+ *  우편번호 / 주소찾기 윈도우 오픈
+ */
+
+function post_zip(){
+	var url = "find_zip_num";
+	window.open(url, "_blank_", "toolbar=no, menubar=no, scrollbars=no, resizable=yes, width=500, height=350");
+	
+}
+
