@@ -43,11 +43,37 @@ public class MemberController {
 
 	@PostMapping(value = "/id_check_form")
 	public String idCheckAction(MemberVO vo, Model model) {
-		
+
+		// 입력한 id값(vo)을 confirmID 함수에서 판별하여 result 변수에 넣는다
 		int result = memberService.confirmID(vo.getId());
 
 		model.addAttribute("message", result);
+		model.addAttribute("id", vo.getId());
 
 		return "member/idcheck";
+	}
+
+	/*
+	 * 사용할 id를 join(회원가입) 화면에 전송
+	 */
+
+	@GetMapping(value = "/id_check_confirmed")
+	public String idCheckConfirmed(MemberVO vo, Model model) {
+
+		model.addAttribute("id", vo.getId());
+		model.addAttribute("reid", vo.getId()); // id 중복확인 필드
+
+		return "member/join";
+	}
+	
+	/*
+	 *  회원가입 처리
+	 */
+	@PostMapping(value="/join")
+	public String joinAction(MemberVO vo) {
+		
+		memberService.insertMember(vo);
+		
+		return "member/login";
 	}
 }

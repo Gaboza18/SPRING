@@ -33,3 +33,44 @@ function idcheck() {
 	var url = "id_check_form?id=" + $("#id").val();
 	window.open(url, "_blank_", "toolbar=no, menubar=no, scrollbars=no, resizable=yes, width=350, height=200");
 }
+
+/*
+ *  중복확인 ID 사용
+ */
+
+function idok(){
+	$("#theform").attr("action", "id_check_confirmed").submit();
+}
+
+/*
+ * 회원가입시, 필수입력 항목 확인
+ */
+
+function go_save() {
+
+	if ($("#id").val() == "") {
+		alert("아이디를 입력 하세요");
+		$("#id").focus();
+		return false;
+	} else if ($("#id").val() != $("#reid").val()) {
+		alert("아이디 중복 체크를 하세요");
+		$("#id").focus();
+		return false;
+	} else if ($("#pwd").val() == "") {
+		alert("비밀번호를 입력 하세요");
+		$("#pwd").focus();
+		return false;
+	} else if ($("#pwd").val() != $("#pwdCheck").val()) {
+		alert("비밀번호가 일치하지 않습니다");
+		$("#pwd").focus();
+		return false;
+	} else if ($("#name").val() == "") {
+		alert("이름을 입력해 주세요");
+		$("#name").focus();
+		return false;
+	} else {
+		$("#join").attr("action", "join").submit(); // 회원가입 요청
+	}
+
+}
+
