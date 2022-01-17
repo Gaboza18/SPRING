@@ -11,10 +11,15 @@ public interface MemberService {
 	MemberVO getMember(String id);
 
 	int confirmID(String id);
-
+	
+	// 사용자 인증
+	public int loginID(MemberVO vo);
+	
 	// 회원 등록
 	void insertMember(MemberVO vo);
 	
 	// 동이름으로 주소 찾기
 	public List<AddressVO> selectAddressByDong(String dong);
+	
+
 }
