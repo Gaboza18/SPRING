@@ -8,11 +8,10 @@
 
 function go_next() {
 
-	if ($(".agree")[0].checked == true) { // 클래스 agree가 배열 0번쨰 항목이 동의함 체크되어
-											// 있을떄
+	if ($(".agree")[0].checked == true) { // 클래스 agree가 '배열 0번쨰 항목=동의함' 체크되어 있을떄
 		$("#join").attr('action', 'join_form').submit(); // 회원가입 페이지로 이동
 	} else if ($(".agree")[1].checked == true) { // 배열 1번쨰 항목이 체크 되어 있을때
-		alert("약관에 동의해 주세요");
+		alert("약관에 동의해 주세요"); 
 	}
 
 }
@@ -52,7 +51,7 @@ function go_save() {
 		alert("아이디를 입력 하세요");
 		$("#id").focus();
 		return false;
-	} else if ($("#id").val() != $("#reid").val()) {
+	} else if ($("#id").val() != $("#reid").val()) { // 입력한 id와 확인용 id가 일치하지 않으면
 		alert("아이디 중복 체크를 하세요");
 		$("#id").focus();
 		return false;
@@ -60,7 +59,7 @@ function go_save() {
 		alert("비밀번호를 입력 하세요");
 		$("#pwd").focus();
 		return false;
-	} else if ($("#pwd").val() != $("#pwdCheck").val()) {
+	} else if ($("#pwd").val() != $("#pwdCheck").val()) { // 입력한 pwd와 확인용 pwd가 일치하지 않으면
 		alert("비밀번호가 일치하지 않습니다");
 		$("#pwd").focus();
 		return false;
@@ -69,7 +68,7 @@ function go_save() {
 		$("#name").focus();
 		return false;
 	} else {
-		$("#join").attr("action", "join").submit(); // 회원가입 요청
+		$("#join").attr("action", "join").submit(); // 회원가입 요청 페이지로 이동한다 
 	}
 
 }

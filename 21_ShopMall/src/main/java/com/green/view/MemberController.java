@@ -55,33 +55,33 @@ public class MemberController {
 		}
 	}
 
-	@GetMapping(value = "/contract")
+	@GetMapping(value = "/contract") // GET 방식의 contract URL이 요청이 되면
 	public String contracView() {
-		return "member/contract";
+		return "member/contract";  // memeber 폴더 및 contract.jsp 파일로 리턴한다
 	}
 
-	@PostMapping(value = "/join_form")
+	@PostMapping(value = "/join_form") // POST 방식의  action="join_form" 요청이 들어오면
 	public String joinView() {
-		return "member/join";
+		return "member/join"; // memeber 폴더 및 join.jsp 파일로 리턴한다
 	}
 
 	/*
 	 * ID 중복 체크 화면 출력
 	 */
 
-	@GetMapping(value = "/id_check_form") // action= id_check_form
+	@GetMapping(value = "/id_check_form") // action= "id_check_form" 요청이 들어오면
 	public String idCheckView(MemberVO vo, Model model) {
 
-		model.addAttribute("id", vo.getId());
+		model.addAttribute("id", vo.getId()); // 입력한 id 값을 세션 객체로 보낸다
 
-		return "member/idcheck";
+		return "member/idcheck"; // idcheck.jsp 이동
 	}
 
 	/*
 	 * ID 중복 체크 수행
 	 */
 
-	@PostMapping(value = "/id_check_form")
+	@PostMapping(value = "/id_check_form") // action= "id_check_form" 요청이 들어오면
 	public String idCheckAction(MemberVO vo, Model model) {
 
 		// 입력한 id값(vo)을 confirmID 함수에서 판별하여 result 변수에 넣는다
@@ -90,7 +90,7 @@ public class MemberController {
 		model.addAttribute("message", result);
 		model.addAttribute("id", vo.getId());
 
-		return "member/idcheck";
+		return "member/idcheck"; // idcheck.jsp 이동
 	}
 
 	/*

@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappings.cart-mapping">
 	
+	<!-- 장바구니에 담기 -->
 	<insert id="insertCart">
 		INSERT INTO cart(cseq, id, pseq,quantity)
 			VALUES(cart_seq.NEXTVAL, #{id}, #{pseq}, #{quantity})
 	</insert>
 	
+	<!-- 장바구니 목록 -->
 	<select id="listCart" parameterType="String" resultType="cart">
 		SELECT * FROM cart_view
 			WHERE id=#{id}
