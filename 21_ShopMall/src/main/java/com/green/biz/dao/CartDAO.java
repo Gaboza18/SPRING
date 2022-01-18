@@ -28,4 +28,9 @@ public class CartDAO {
 	public void deleteCart(int cseq) {
 		mybatis.delete("mappings.cart-mapping.deleteCart", cseq);
 	}
+
+	// 장바구니 항목을 '처리'로 업데이트
+	public void updateCart(int cseq) {
+		mybatis.update("mappings.cart-mapping.updateCart", cseq);
+	}
 }

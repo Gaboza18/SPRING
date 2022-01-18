@@ -9,16 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.biz.dto.CartVO;
 import com.green.biz.dto.MemberVO;
+import com.green.biz.dto.OrderVO;
 import com.green.biz.order.CartService;
+import com.green.biz.order.OrderService;
 
 @Controller
 public class MypageController {
 
 	@Autowired
 	private CartService cartService;
+	@Autowired
+	private OrderService orderService;
 
 	/*
 	 * 장바구니 담기 요청 처리
@@ -56,7 +61,7 @@ public class MypageController {
 		if (loginUser == null) {
 			return "member/login";
 		} else {
-			
+
 			// 고객 아이디를 받아 장바구니 목록을 가져온다
 			List<CartVO> cartList = cartService.listCart(loginUser.getId());
 
@@ -73,5 +78,45 @@ public class MypageController {
 			return "mypage/cartList";
 		}
 
+	}
+
+	/*
+	 * 장바구니 항목 삭제 요청 처리
+	 */
+	@PostMapping(value = "/cart_delete")
+	public String cartDelete(@RequestParam(value = "cseq") int[] cseq) {
+
+		for (int i = 0; i < cseq.length; i++) {
+			System.out.println(("삭제할 cart seq=" + cseq[i]));
+			cartService.deleteCart(cseq[i]);
+		}
+		return "redirect:cart_list";
+	}
+
+	/*
+	 * 장바구니 내역의 주문처리
+	 */
+	@PostMapping(value = "/order_insert")
+	public String orderInsert(OrderVO vo, HttpSession session, Model model) {
+
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "member/login";
+		} else {
+			vo.setId(loginUser.getId());
+
+			int oseq = orderService.insertOrder(vo);
+
+			// TODO: 주문번호 전달
+			model.addAttribute("oseq", oseq);
+
+			return "redirect:order_list";
+		}
+	}
+
+	@GetMapping(value = "order_list")
+	public String orderList(@RequestParam(value = "oseq") int oseq) {
+		return "mypage/orderList";
 	}
 }

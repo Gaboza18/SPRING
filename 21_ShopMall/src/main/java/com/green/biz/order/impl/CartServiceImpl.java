@@ -11,10 +11,10 @@ import com.green.biz.order.CartService;
 
 @Service("cartService")
 public class CartServiceImpl implements CartService {
-	
+
 	@Autowired
 	private CartDAO cartDao;
-	
+
 	@Override
 	public void insertCart(CartVO vo) {
 		cartDao.insertCart(vo);
@@ -28,6 +28,11 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void deleteCart(int cseq) {
 		cartDao.deleteCart(cseq);
+	}
+
+	@Override
+	public void updateCart(int cseq) {
+		cartDao.updateCart(cseq);
 	}
 
 }

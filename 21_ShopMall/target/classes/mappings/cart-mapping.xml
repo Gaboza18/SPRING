@@ -19,4 +19,10 @@
 		DELETE FROM cart WHERE cseq=#{cseq}	
 	</delete>
 	
+	<!-- 장바구니 항목의 주문 처리결과 -->
+	<update id="updateCart" parameterType="int">
+		UPDATE cart SET result='2'
+			WHERE cseq=#{cseq}
+	</update>
+	
 </mapper>
