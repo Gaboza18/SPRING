@@ -60,4 +60,15 @@ public class OrderServiceImpl implements OrderService {
 		oDao.insertOrderDetail(vo);
 	}
 
+	@Override
+	public List<OrderVO> listOrderById(OrderVO vo) {
+		return oDao.listOrderById(vo);
+	}
+
+	@Override
+	public List<Integer> selectSeqOrdering(OrderVO vo) {
+
+		return oDao.selectSeqOrdering(vo);
+	}
+
 }

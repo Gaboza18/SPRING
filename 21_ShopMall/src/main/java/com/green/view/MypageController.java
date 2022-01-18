@@ -115,8 +115,38 @@ public class MypageController {
 		}
 	}
 
-	@GetMapping(value = "order_list")
-	public String orderList(@RequestParam(value = "oseq") int oseq) {
-		return "mypage/orderList";
+	/*
+	 * 진행중인 주문내역 조회 입력 파라미터: oseq, result = '1'
+	 */
+
+	@GetMapping(value = "/order_list")
+	public String orderList(@RequestParam(value = "oseq") int oseq, HttpSession session, Model model, OrderVO order) {
+
+		// (1) 로그인 확인
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "member/login";
+		} else {
+
+			// (2) 주문번호별 진행중인 주문 내역 조회
+			order.setId(loginUser.getId());
+			order.setOseq(oseq);
+			order.setResult("1");
+			List<OrderVO> orderList = orderService.listOrderById(order);
+
+			// (3) 주문 총액 계산
+			int totalAmount = 0;
+			for (OrderVO vo : orderList) {
+				totalAmount += (vo.getQuantity() * vo.getPrice2());
+			}
+
+			// (4) 내장 객체에 결과 저장
+			model.addAttribute("orderList", orderList);
+			model.addAttribute("totalPrice", totalAmount);
+
+			// (5) 화면 호출
+			return "mypage/orderList";
+		}
 	}
 }
