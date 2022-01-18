@@ -17,7 +17,7 @@ public class CartVO {
 	private String mname;
 	private String pname;
 	private int quantity;
-	private int price2;
+	private int price2; // ÆÇ¸Å°¡
 	private Timestamp indate;
 	
 }
