@@ -25,6 +25,7 @@
 	<mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**"></mvc:resources>
 	<mvc:resources location="/WEB-INF/views/member/" mapping="/member/**"></mvc:resources>
 	<mvc:resources location="/WEB-INF/views/mypage/" mapping="/mypage/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/views/product/" mapping="/product/**"></mvc:resources>
 	
 	<!-- JSP 소스 ViewResolver -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

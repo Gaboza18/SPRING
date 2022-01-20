@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.green.biz.dto.AddressVO;
 import com.green.biz.dto.MemberVO;
@@ -53,6 +54,19 @@ public class MemberController {
 		} else { // 사용자 인증 실패
 			return "member/login_fail";
 		}
+	}
+	
+	/*
+	 * 로그아웃 기능
+	 */
+	
+	@GetMapping(value="/logout")
+	public String logout(SessionStatus status) {
+		
+		// session.invalidate(); // 동작이 안됨
+		status.setComplete(); // 현재 세션을 종료
+		
+		return "member/login";
 	}
 
 	@GetMapping(value = "/contract") // GET 방식의 contract URL이 요청이 되면

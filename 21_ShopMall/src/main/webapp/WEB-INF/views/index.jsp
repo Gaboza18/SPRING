@@ -21,7 +21,7 @@
           <a href="product_detail?pseq=${productVO.pseq}">
             <img src="product_images/${productVO.image}" />
             <h3> ${productVO.name} </h3>    
-            <p>${productVO.price2} </p>
+            <p><fmt:formatNumber type="currency" value="${productVO.price2}"/> </p>
           </a>    
         </div>
       </c:forEach>      
@@ -35,7 +35,7 @@
            <a href="product_detail?pseq=${productVO.pseq}">
              <img src="product_images/${productVO.image}" />
            <h3> ${productVO.name} </h3>    
-           <p>${productVO.price2} </p>
+           <p><fmt:formatNumber type="currency" value="${productVO.price2}"/> </p>
         </a>  
       </div>
     </c:forEach>      

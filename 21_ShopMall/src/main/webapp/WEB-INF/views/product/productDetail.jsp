@@ -16,7 +16,7 @@
             <h2> ${productVO.name} </h2>  
           </a>    
           <label> 가 격 :  </label>  
-          <p> ${productVO.price2} 원</p>  
+          <p> <fmt:formatNumber type="currency" value="${productVO.price2}"/></p>  
           <label> 수 량 : </label>
           <input  type="text"   name="quantity" id="quantity" size="2"      value="1"><br>
           <input  type="hidden" name="pseq" value="${productVO.pseq}"><br>
