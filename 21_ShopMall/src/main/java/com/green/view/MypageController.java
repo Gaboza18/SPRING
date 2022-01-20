@@ -164,10 +164,10 @@ public class MypageController {
 			// 사용자가 주문한 모든 주문번호 조회
 			OrderVO vo = new OrderVO();
 
-			vo.setId(loginUser.getId());
-			vo.setResult("1");
+			vo.setId(loginUser.getId()); // 회원 ID
+			vo.setResult("1"); // 주문 처리완료 -- 여부 완료:1 미완료:2 -- 완료만 가져온다
 
-			List<Integer> oseqList = orderService.selectSeqOrdering(vo);
+			List<Integer> oseqList = orderService.selectSeqOrdering(vo); // 사용자별 주문번호 목록
 
 			// 각 주문번호를 조회하여 주문요약정보 생성
 
@@ -179,9 +179,9 @@ public class MypageController {
 
 				OrderVO orderVO = new OrderVO();
 
-				orderVO.setId(loginUser.getId());
-				orderVO.setOseq(oseq);
-				orderVO.setResult("1");
+				orderVO.setId(loginUser.getId()); // 사용자 ID
+				orderVO.setOseq(oseq); //
+				orderVO.setResult("1"); //
 
 				// 각 주문에 대한 주문내역 조회(사용자 ID에 대한 주문내역)
 				List<OrderVO> listByOseq = orderService.listOrderById(orderVO);
@@ -189,7 +189,7 @@ public class MypageController {
 				// 위에서 주문한 주문내역의 요약정보 생성
 				OrderVO order = new OrderVO();
 
-				order.setOseq(listByOseq.get(0).getOdseq());
+				order.setOseq(listByOseq.get(0).getOseq());
 				order.setIndate(listByOseq.get(0).getIndate());
 
 				if (listByOseq.size() > 1) { // 주문내역 2건 이상 일경우
@@ -209,10 +209,122 @@ public class MypageController {
 				// 요약정보를 List 변수에 추가
 				orderList.add(order); // n번 주문외 n건 n원 값 리스트로 담는다
 			}
-			model.addAttribute("title", "진행중인 주문내역");
-			model.addAttribute("orderList", orderList);
-
+			model.addAttribute("title", "진행중인 주문내역"); // My Page(${title})
+			model.addAttribute("orderList", orderList); // items="${orderList}"
 		}
 		return "mypage/mypage";
+	}
+
+	// 진행중인 주문내역 상세보기
+
+	@GetMapping(value = "/order_detail")
+	public String orderDetail(OrderVO vo, HttpSession session, Model model) {
+
+		// 세션 객체에서 로그인 확인
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "member/login";
+		} else {
+
+			// 주문번호를 조건으로 주문 조회
+			vo.setId(loginUser.getId());
+			// vo.setResult("1");
+			vo.setResult("");
+
+			List<OrderVO> orderList = orderService.listOrderById(vo); // 주문 목록
+
+			// 화면에 출력할 정보 생성
+
+			// (1) 주문자 정보 생성
+			OrderVO orderDetail = new OrderVO();
+
+			orderDetail.setOseq(orderList.get(0).getOseq());
+			orderDetail.setIndate(orderList.get(0).getIndate());
+			orderDetail.setMname(orderList.get(0).getMname());
+			orderDetail.setResult(orderList.get(0).getResult());
+
+			// (2) 주문 합계 금액 계산
+			int amount = 0;
+
+			for (int i = 0; i < orderList.size(); i++) {
+				amount += (orderList.get(i).getQuantity() * orderList.get(i).getPrice2());
+			}
+
+			model.addAttribute("title", "My Page(주문 상세 정보)"); // <h2> ${title} </h2>
+			model.addAttribute("orderDetail", orderDetail);
+			model.addAttribute("totalPrice", amount);
+			model.addAttribute("orderList", orderList);
+
+			return "mypage/orderDetail";
+		}
+
+	}
+
+	// 총 주문 내역 보기(처리결과에 관계없이 사용자의 모든 주문 조회)
+
+	@GetMapping(value = "/order_all")
+	public String orderAllView(OrderVO vo, HttpSession session, Model model) {
+
+		// 사용자 로그인 확인
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "member/login";
+		} else {
+
+			// 사용자의 전체 주문번호 확인
+
+			vo.setId(loginUser.getId()); // 회원 ID
+			vo.setResult(""); // 처리결과 지정 안함
+
+			List<Integer> oseqList = orderService.selectSeqOrdering(vo);
+
+			// 각 주문번호 별 주문내역 조회
+
+			// (1) 주문 요약 정보 저장 변수
+			List<OrderVO> orderList = new ArrayList<>(); // 주문번호 목록 저장
+
+			// (2) 모든 주문번호에 대한 요약정보 생성
+			for (int oseq : oseqList) {
+
+				OrderVO orderVO = new OrderVO();
+
+				orderVO.setId(loginUser.getId()); // 사용자 ID
+				orderVO.setOseq(oseq); //
+				orderVO.setResult(""); //
+
+				// 각 주문에 대한 주문내역 조회(사용자 ID에 대한 주문내역)
+				List<OrderVO> orders = orderService.listOrderById(orderVO);
+
+				// 주문요약 정보 생성
+				OrderVO summary = new OrderVO();
+
+				summary = orders.get(0); // 첫번째 상품내역 정보를 복사
+
+				if (orders.size() > 1) {
+					summary.setPname(orders.get(0).getPname() + " 외" + (orders.size() - 1) + "건");
+				} else {
+					summary.setPname(orders.get(0).getPname());
+				}
+
+				// 주문번호별 총액 계산
+				int amount = 0;
+				for (OrderVO order : orders) {
+					amount += (order.getQuantity() * order.getPrice2());
+				}
+
+				summary.setPrice2(amount);
+
+				// 총합정보 List 변수에 추가
+				orderList.add(summary);
+			}
+
+			// 결과 화면 전달
+			model.addAttribute("title", "총 주문 내역"); // My Page(${title})
+			model.addAttribute("orderList", orderList); // items="${orderList}"
+
+			return "mypage/mypage";
+		}
 	}
 }
