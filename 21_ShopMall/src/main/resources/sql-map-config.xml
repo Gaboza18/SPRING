@@ -12,6 +12,7 @@
 		<typeAlias type="com.green.biz.dto.CartVO" alias="cart" />
 		<typeAlias type="com.green.biz.dto.OrderVO" alias="order" />
 		<typeAlias type="com.green.biz.dto.QnaVO" alias="qna" />
+		<typeAlias type="com.green.biz.dto.WorkerVO" alias="worker" />
 	</typeAliases>
 
 	<!-- SQL 매핑파일 등록 -->
@@ -21,6 +22,7 @@
 		<mapper resource="mappings/cart-mapping.xml" />
 		<mapper resource="mappings/order-mapping.xml" />
 		<mapper resource="mappings/qna-mapping.xml" />
+		<mapper resource="mappings/admin-mapping.xml" />
 	</mappers>
 
 </configuration>

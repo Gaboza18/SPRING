@@ -157,17 +157,20 @@ public class MypageController {
 		// 세션에 저장된 로그인 정보 읽어옴
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 
-		if (loginUser == null) {
-			return "member/login";
+		if (loginUser == null) { // 로그인이 되어있지 않으면
+			return "member/login"; // 로그인 페이지로 이동한다
 		} else {
 
 			// 사용자가 주문한 모든 주문번호 조회
 			OrderVO vo = new OrderVO();
 
-			vo.setId(loginUser.getId()); // 회원 ID
-			vo.setResult("1"); // 주문 처리완료 -- 여부 완료:1 미완료:2 -- 완료만 가져온다
-
-			List<Integer> oseqList = orderService.selectSeqOrdering(vo); // 사용자별 주문번호 목록
+			vo.setId(loginUser.getId()); // 로그인한 계정의 '아이디' 값을 가져온다
+			vo.setResult("1"); // 주문 처리완료 -- 여부 완료:1 미완료:2 -- '완료'만 가져온다
+			
+			/* 
+			 * 사용자별 주문번호 목록 조회
+			 */ 
+			List<Integer> oseqList = orderService.selectSeqOrdering(vo); // '주문번호'를 '사용자 id'를 조건, 주문결과가 '1' 인 조건을 포함시켜 조회한다 -> oseqList 배열에 담는다 
 
 			// 각 주문번호를 조회하여 주문요약정보 생성
 
@@ -180,8 +183,8 @@ public class MypageController {
 				OrderVO orderVO = new OrderVO();
 
 				orderVO.setId(loginUser.getId()); // 사용자 ID
-				orderVO.setOseq(oseq); //
-				orderVO.setResult("1"); //
+				orderVO.setOseq(oseq); // 주문번호
+				orderVO.setResult("1"); // 처리결과
 
 				// 각 주문에 대한 주문내역 조회(사용자 ID에 대한 주문내역)
 				List<OrderVO> listByOseq = orderService.listOrderById(orderVO);
@@ -239,10 +242,10 @@ public class MypageController {
 			// (1) 주문자 정보 생성
 			OrderVO orderDetail = new OrderVO();
 
-			orderDetail.setOseq(orderList.get(0).getOseq());
-			orderDetail.setIndate(orderList.get(0).getIndate());
-			orderDetail.setMname(orderList.get(0).getMname());
-			orderDetail.setResult(orderList.get(0).getResult());
+			orderDetail.setOseq(orderList.get(0).getOseq()); // 주문번호
+			orderDetail.setIndate(orderList.get(0).getIndate()); // 주문일자
+			orderDetail.setMname(orderList.get(0).getMname()); // 주문자
+			orderDetail.setResult(orderList.get(0).getResult()); // 처리상태
 
 			// (2) 주문 합계 금액 계산
 			int amount = 0;

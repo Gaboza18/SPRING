@@ -11,8 +11,8 @@ import lombok.ToString;
 @ToString
 public class OrderVO {
 
-	private int odseq;
-	private int oseq;
+	private int odseq; // 주문상세 번호
+	private int oseq; // 주문번호
 	private String id;
 	private Timestamp indate;
 	private String mname;

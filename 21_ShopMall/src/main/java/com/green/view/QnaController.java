@@ -33,11 +33,11 @@ public class QnaController {
 		if (loginUser == null) {
 			return "member/login";
 		} else {
-			List<QnaVO> qnaList = qnaService.listQna(loginUser.getId());
+			List<QnaVO> qnaList = qnaService.listQna(loginUser.getId()); // 회원아이디로 작성한 게시글 전체 조회 한다
 
-			model.addAttribute("qnaList", qnaList);
+			model.addAttribute("qnaList", qnaList); // 게시글 배열 화면에 전송
 
-			return "qna/qnaList";
+			return "qna/qnaList"; // 게시판 목록으로 이동한다
 		}
 	}
 

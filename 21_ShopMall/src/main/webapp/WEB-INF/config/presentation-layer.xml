@@ -16,6 +16,7 @@
 	<!-- 리소스 위치 설정 -->
 	<!-- css 적용 -->
 	<mvc:resources location="/WEB-INF/resources/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/views/admin/" mapping="/admin/**"></mvc:resources>
 	
 	<!-- 이미지 적용 -->
 	<mvc:resources location="/WEB-INF/resources/images/" mapping="/images/**"></mvc:resources>
