@@ -6,13 +6,12 @@
 
 	<!-- resultType 등록 -->
 	<typeAliases>
-		<typeAlias type="com.green.biz.dto.ProductVO"
-			alias="product" />
+		<typeAlias type="com.green.biz.dto.ProductVO" alias="product" />
 		<typeAlias type="com.green.biz.dto.MemberVO" alias="member" />
-		<typeAlias type="com.green.biz.dto.AddressVO"
-			alias="address" />
+		<typeAlias type="com.green.biz.dto.AddressVO" alias="address" />
 		<typeAlias type="com.green.biz.dto.CartVO" alias="cart" />
 		<typeAlias type="com.green.biz.dto.OrderVO" alias="order" />
+		<typeAlias type="com.green.biz.dto.QnaVO" alias="qna" />
 	</typeAliases>
 
 	<!-- SQL 매핑파일 등록 -->
@@ -21,6 +20,7 @@
 		<mapper resource="mappings/member-mapping.xml" />
 		<mapper resource="mappings/cart-mapping.xml" />
 		<mapper resource="mappings/order-mapping.xml" />
+		<mapper resource="mappings/qna-mapping.xml" />
 	</mappers>
 
 </configuration>
