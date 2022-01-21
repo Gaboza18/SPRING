@@ -34,4 +34,9 @@
 		<property name="suffix" value=".jsp"></property>
 		<property name="contentType" value="text/html; charset= UTF-8"></property>
 	</bean>
+	
+	<!-- 파일전송 객체 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="500000000"></property>
+	</bean>
 </beans>

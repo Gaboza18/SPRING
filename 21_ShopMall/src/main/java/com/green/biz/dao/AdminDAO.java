@@ -14,11 +14,11 @@ public class AdminDAO {
 
 	// 관리자 인증
 	public String workerCheck(String id) {
-		return mybatis.selectOne("mappings/admin-mapping.workerCheck", id);
+		return mybatis.selectOne("mappings.admin-mapping.workerCheck", id);
 	}
 
 	// 관리자 정보 조회
 	public WorkerVO getEmployee(String id) {
-		return mybatis.selectOne("mappings/admin-mapping.getEmployee", id);
+		return mybatis.selectOne("mappings.admin-mapping.getEmployee", id);
 	}
 }

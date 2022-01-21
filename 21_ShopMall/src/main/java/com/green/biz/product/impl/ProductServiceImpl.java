@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	
+
 	public ProductVO getProduct(ProductVO vo) {
 		return pDao.getProduct(vo);
 	}
@@ -34,6 +34,26 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductVO> getProductListByKind(ProductVO vo) {
 		return pDao.getProductListByKind(vo);
+	}
+
+	@Override
+	public int countProductList(String name) {
+		return pDao.countProductList(name);
+	}
+
+	@Override
+	public List<ProductVO> listProduct(String name) {
+		return pDao.listProduct(name);
+	}
+
+	@Override
+	public void insertProduct(ProductVO vo) {
+		pDao.insertProduct(vo);
+	}
+
+	@Override
+	public void updateProduct(ProductVO vo) {
+		pDao.updateProduct(vo);
 	}
 
 }

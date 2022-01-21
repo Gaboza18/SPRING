@@ -34,4 +34,12 @@ public class OrderDAO {
 		return mybatis.selectList("mappings.order-mapping.selectSeqOrdering", vo);
 	}
 
+	public List<OrderVO> listOrder(String key) {
+		return mybatis.selectList("mappings.order-mapping.listOrder", key);
+	}
+
+	public void updateOrderResult(int odseq) {
+		mybatis.update("mappings.order-mapping.updateOrderResult", odseq);
+	}
+
 }

@@ -1,11 +1,13 @@
 package com.green.biz.admin.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.green.biz.admin.AdminService;
 import com.green.biz.dao.AdminDAO;
 import com.green.biz.dto.WorkerVO;
 
+@Service("adminService")
 public class AdminServiceImpl implements AdminService {
 
 	@Autowired
@@ -37,8 +39,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public WorkerVO getEmployee(String id) {
-
-		return null;
+		return adminDao.getEmployee(id);
 	}
 
 }

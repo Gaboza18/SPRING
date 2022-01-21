@@ -17,5 +17,17 @@ public interface ProductService {
 
 	// 카테고리별 상품 이름순으로 조회
 	List<ProductVO> getProductListByKind(ProductVO vo);
+	
+	// 전체 제품의 갯수 조회
+	public int countProductList(String name);
+	
+	// 제품 목록 조회
+	public List<ProductVO> listProduct(String name);
+	
+	// 제품 추가
+	public void insertProduct(ProductVO vo);
+	
+	// 제품정보 수정
+	public void updateProduct(ProductVO vo); 
 
 }

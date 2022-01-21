@@ -35,4 +35,17 @@
 				ORDER BY oseq DESC
 	</select>
 	
+	<!-- 관리자 전체 주문내역 조회  -->
+	<select id="listOrder" resultType="order">
+		SELECT * FROM order_view
+			WHERE mname LIKE '%'||#{key}||'%' ORDER BY result, oseq DESC
+	</select>
+	
+	<!-- 주문완료 처리 -->
+	<update id="updateOrderResult">
+		UPDATE order_detail
+			SET result='2'
+				WHERE odseq=#{odseq}
+	</update>
+	
 </mapper>
