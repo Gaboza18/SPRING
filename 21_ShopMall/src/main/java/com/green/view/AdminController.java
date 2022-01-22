@@ -126,7 +126,7 @@ public class AdminController {
 	 * 
 	 * @RequestParam(value=""): 이미지 파일을 입력받는다 / VO의 image는 이미지 파일 이름
 	 */
-	@PostMapping(value = "/admin_product_write")
+	@PostMapping(value = "/admin_product_write") // 상품 등록시 이미지 파일을 등록하는 action 요청
 	public String adminProductWrite(@RequestParam(value = "product_image") MultipartFile uploadFile, ProductVO vo,
 			HttpSession session) {
 
@@ -136,18 +136,19 @@ public class AdminController {
 			return "admin/main";
 		} else {
 
-			String fileName = "";
+			String fileName = ""; // 파일경로 저장하는 변수 선언
 
 			if (!uploadFile.isEmpty()) { // 첨부 파일이 비어있지 않으면(이미지 파일 읽어옴)
+				
 				fileName = uploadFile.getOriginalFilename();
 
 				// vo 객체에 이미지 파일 저장
 				vo.setImage(fileName);
 
 				// 이미지 파일의 실제 저장경로 구하기
-				String image_path = session.getServletContext().getRealPath("WEB-INF/resources/product_images/"); // 프로젝트의
-																													// 실제
-																													// 경로
+				String image_path = session.getServletContext().getRealPath("WEB-INF/resources/product_images/"); // 프로젝트의 실제 경로
+																													
+																													
 				System.out.println("이미지 경로: " + image_path);
 
 				try {
@@ -162,16 +163,16 @@ public class AdminController {
 			}
 		}
 
-		productService.insertProduct(vo);
+		productService.insertProduct(vo); // 이미지 파일 등록
 
-		return "redirect:admin_product_list";
+		return "redirect:admin_product_list"; // 관리자 상품 리스트 action 전송
 	}
 
 	/*
 	 * 상품 상세 정보 출력
 	 */
 
-	@PostMapping(value = "/admin_product_detail")
+	@PostMapping(value = "/admin_product_detail") // #prod_form -> js (admin_product_detail action 실행)
 	public String adminProductDetail(ProductVO vo, Model model) {
 
 		String[] kindList = { "", "Heels", "Boots", "Sandals", "Slipers", "Sneekers", "Sales" };
@@ -199,7 +200,7 @@ public class AdminController {
 		ProductVO product = productService.getProduct(vo);
 
 		model.addAttribute("productVO", product); // 화면에 전달할 상품상세정보
-		model.addAttribute("kindList", kindList);
+		model.addAttribute("kindList", kindList); // 상품 종류 화면에 전달
 
 		return "admin/product/productUpdate";
 	}
