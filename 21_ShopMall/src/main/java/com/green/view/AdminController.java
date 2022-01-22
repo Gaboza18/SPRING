@@ -40,26 +40,27 @@ public class AdminController {
 	 * 관리자 로그인 폼 구현
 	 */
 
-	@GetMapping(value = "/admin_login_form")
+	@GetMapping(value = "/admin_login_form") // Get 방식의 amdmin_login_form action 요청
 	public String adminLoginView() {
-		return "admin/main";
+		return "admin/main"; // admin 밑 main.jsp 실행
 	}
 
 	/*
 	 * 관리자 로그인 (@RequestParam(value="workerId")String workerId = name="workerId"
 	 * main.jsp 에서 설정한 name값을 받아온다 (* VO값에는 id로 설정)
+	 * 사용자가 입력한 id값 pwd값을 입력받는다
 	 */
 
-	@PostMapping(value = "/admin_login")
+	@PostMapping(value = "/admin_login") // Post 방식의 admin_login action 요청
 	public String adminLogin(@RequestParam(value = "workerId") String workerId,
 			@RequestParam(value = "workerPwd") String workerPwd, Model model) {
 
 		WorkerVO vo = new WorkerVO();
 
-		vo.setId(workerId); // 아이디
-		vo.setPwd(workerPwd); // 비밀번호
+		vo.setId(workerId); // DB 아이디
+		vo.setPwd(workerPwd); // DB 비밀번호
 
-		int result = adminService.workerCheck(vo); // 아이디 있으면 1 / 없으면 0 이기 떄문에 int 형으로 변수 선언
+		int result = adminService.workerCheck(vo); // 아이디 있으면 1 / 없으면 0  (int 형으로 변수 선언)
 
 		/*
 		 * 정상 로그인 - 상품 목록화면 이동 / 비정상 로그인 - 메세지 설정하고 로그인 페이지 이동
@@ -70,7 +71,7 @@ public class AdminController {
 			WorkerVO adminUser = adminService.getEmployee(workerId); // 관리자 정보를 변수에 담는다(다른 페이지 에서도 사용)
 			model.addAttribute("adminUser", adminUser);
 
-			return "redirect:admin_product_list";
+			return "redirect:admin_product_list"; // 관리자 상품관리 페이지로 이동
 
 		} else { // 비정상 로그인
 			if (result == 0) {
@@ -92,30 +93,31 @@ public class AdminController {
 		// 관리자 로그인 화면
 		WorkerVO adminUser = (WorkerVO) session.getAttribute("adminUser");
 
-		if (adminUser == null) {
+		if (adminUser == null) { // 로그인이 안되어 있을경우
 			return "admin/main";
 		} else {
 
-			// 상품목록 조회
+			// 상품목록 조회 - 상품목록 조회 값을 리스트 형식으로 출력
 			List<ProductVO> prodList = productService.listProduct("");
 
-			model.addAttribute("productList", prodList);
+			model.addAttribute("productList", prodList); // ${productList} 속성값에 담고 화면에 호출한다
 
-			return "admin/product/productList";
+			return "admin/product/productList"; // 상품 리스트 화면으로 전송
 		}
 	}
 
 	/*
 	 * 상품 등록 페이지 표시
 	 */
-	@PostMapping(value = "/admin_product_write_form")
+	@PostMapping(value = "/admin_product_write_form") // 상품 등록을 누르면 js -> action을 넘겨준다 -> admin_product_write_form
 	public String adminProductWriteView(Model model) {
+		
+		// 상품 등록 페이지로 이동하면 상품분류  항목 배열에 담는다
+		String kindList[] = { "Heels", "Boots", "Sandals", "Slipers", "Sneekers", "Sales" };
 
-		String kindList[] = { "Heels", "Boots", "Sandals", "Slipers", "Sneekers", "Sales" }; // 상품 분류
+		model.addAttribute("kindList", kindList); // 배열에 담은 항목을 화면에 출력한다
 
-		model.addAttribute("kindList", kindList);
-
-		return "admin/product/productWrite";
+		return "admin/product/productWrite"; // 상품등록 페이지로 전송 
 
 	}
 

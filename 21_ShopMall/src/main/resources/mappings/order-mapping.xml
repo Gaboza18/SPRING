@@ -15,7 +15,7 @@
 	<!-- 주문 상세 테이블에 상품 상세정보 생성 -->
 	<insert id="insertOrderDetail">
 		INSERT INTO order_detail(odseq, oseq, pseq, quantity) 
-			VALUES(order_detail_seq.NEXTVAL, #{oseq}, #{oseq}, #{quantity})
+			VALUES(order_detail_seq.NEXTVAL, #{oseq}, #{pseq}, #{quantity})
 	</insert>
 	
 	<!-- 주문내역 조회 -->

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappings.admin-mapping">
 	
-	<!-- 관리자 인증 -->
+	<!-- 관리자 인증: 입력하는 id를 조건으로 비밀번호 조회 -->
 	<select id="workerCheck" resultType="String">
 		SELECT pwd FROM worker
 		WHERE id=#{id}
 	</select>
 	
-	<!-- 관리자 정보 조회 -->
+	<!-- 관리자 정보 조회: 입력한 id를 조건으로 관리자 테이블 모든 컬럼 조회 -->
 	<select id="getEmployee" resultType="worker">
 		SELECT * FROM worker
 		WHERE id=#{id}

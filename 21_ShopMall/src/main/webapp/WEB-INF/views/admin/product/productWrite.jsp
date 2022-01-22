@@ -20,7 +20,7 @@
 <tr>
   <th>상품명</th>
   <td width="343" colspan="5">
-       <input type="text" name="name" id="name" size="47" maxlength="100" value="킬힐">
+       <input type="text" name="name" id="name" size="47" maxlength="100" value="상품 이름을 입력 해주세요">
   </td>
 </tr>
 <tr>
