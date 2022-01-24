@@ -14,5 +14,11 @@ public interface QnaService {
 
 	// 게시물 등록
 	void insertQna(QnaVO vo);
+	
+	// 게시물 조회(관리자)
+	public List<QnaVO> listAllQna();
+	
+	// 게시물 답변처리(관리자)
+	public void updateQna(QnaVO vo);
 
 }

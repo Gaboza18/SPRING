@@ -15,16 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.green.biz.admin.AdminService;
 import com.green.biz.dto.MemberVO;
 import com.green.biz.dto.OrderVO;
 import com.green.biz.dto.ProductVO;
+import com.green.biz.dto.QnaVO;
 import com.green.biz.dto.WorkerVO;
 import com.green.biz.member.MemberService;
 import com.green.biz.order.OrderService;
 import com.green.biz.product.ProductService;
+import com.green.biz.qna.QnaService;
 
 @Controller
 @SessionAttributes("adminUser") // 다른 세션에서도 사용하기 위한 선언
@@ -38,9 +41,12 @@ public class AdminController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private QnaService qnaService;
 
 	/*
 	 * 관리자 로그인 폼 구현
@@ -53,8 +59,7 @@ public class AdminController {
 
 	/*
 	 * 관리자 로그인 (@RequestParam(value="workerId")String workerId = name="workerId"
-	 * main.jsp 에서 설정한 name값을 받아온다 (* VO값에는 id로 설정)
-	 * 사용자가 입력한 id값 pwd값을 입력받는다
+	 * main.jsp 에서 설정한 name값을 받아온다 (* VO값에는 id로 설정) 사용자가 입력한 id값 pwd값을 입력받는다
 	 */
 
 	@PostMapping(value = "/admin_login") // Post 방식의 admin_login action 요청
@@ -66,7 +71,7 @@ public class AdminController {
 		vo.setId(workerId); // DB 아이디
 		vo.setPwd(workerPwd); // DB 비밀번호
 
-		int result = adminService.workerCheck(vo); // 아이디 있으면 1 / 없으면 0  (int 형으로 변수 선언)
+		int result = adminService.workerCheck(vo); // 아이디 있으면 1 / 없으면 0 (int 형으로 변수 선언)
 
 		/*
 		 * 정상 로그인 - 상품 목록화면 이동 / 비정상 로그인 - 메세지 설정하고 로그인 페이지 이동
@@ -87,6 +92,17 @@ public class AdminController {
 			}
 			return "admin/main";
 		}
+	}
+
+	/*
+	 * 관리자 계정 로그아웃 처리
+	 */
+	@GetMapping(value = "/admin_logout")
+	public String adminLogout(SessionStatus status) {
+
+		status.setComplete();
+
+		return "admin/main";
 	}
 
 	/*
@@ -117,13 +133,13 @@ public class AdminController {
 	 */
 	@PostMapping(value = "/admin_product_write_form") // 상품 등록을 누르면 js -> action을 넘겨준다 -> admin_product_write_form
 	public String adminProductWriteView(Model model) {
-		
-		// 상품 등록 페이지로 이동하면 상품분류  항목 배열에 담는다
+
+		// 상품 등록 페이지로 이동하면 상품분류 항목 배열에 담는다
 		String kindList[] = { "Heels", "Boots", "Sandals", "Slipers", "Sneekers", "Sales" };
 
 		model.addAttribute("kindList", kindList); // 배열에 담은 항목을 화면에 출력한다
 
-		return "admin/product/productWrite"; // 상품등록 페이지로 전송 
+		return "admin/product/productWrite"; // 상품등록 페이지로 전송
 
 	}
 
@@ -145,16 +161,17 @@ public class AdminController {
 			String fileName = ""; // 파일경로 저장하는 변수 선언
 
 			if (!uploadFile.isEmpty()) { // 첨부 파일이 비어있지 않으면(이미지 파일 읽어옴)
-				
+
 				fileName = uploadFile.getOriginalFilename();
 
 				// vo 객체에 이미지 파일 저장
 				vo.setImage(fileName);
 
 				// 이미지 파일의 실제 저장경로 구하기
-				String image_path = session.getServletContext().getRealPath("WEB-INF/resources/product_images/"); // 프로젝트의 실제 경로
-																													
-																													
+				String image_path = session.getServletContext().getRealPath("WEB-INF/resources/product_images/"); // 프로젝트의
+																													// 실제
+																													// 경로
+
 				System.out.println("이미지 경로: " + image_path);
 
 				try {
@@ -270,7 +287,10 @@ public class AdminController {
 	 * 주문목록 조회 요청 처리
 	 */
 	@RequestMapping(value = "/admin_order_list")
-	public String adminOrderList(@RequestParam(value = "key", defaultValue = "") String key, Model model) { // key 갑을 입력받아 실행한다 key, null 값
+	public String adminOrderList(@RequestParam(value = "key", defaultValue = "") String key, Model model) { // key 갑을
+																											// 입력받아 실행한다
+																											// key, null
+																											// 값
 
 		List<OrderVO> orderList = orderService.listOrder(key);
 
@@ -278,34 +298,76 @@ public class AdminController {
 
 		return "admin/order/orderList";
 	}
-	
+
 	/*
-	 *  주문완료 처리(입금확인)
-	 *  입력 파라미터: 입금확인한 result 필드의 상세주문번호(odseq) 배열이 전달됨
+	 * 주문완료 처리(입금확인) 입력 파라미터: 입금확인한 result 필드의 상세주문번호(odseq) 배열이 전달됨
 	 */
-	@RequestMapping(value="/admin_order_save")
-	public String adminOrderSave(@RequestParam(value="result") int[] odseq) {
-		
-		for(int i=0; i<odseq.length; i++) {
+	@RequestMapping(value = "/admin_order_save")
+	public String adminOrderSave(@RequestParam(value = "result") int[] odseq) {
+
+		for (int i = 0; i < odseq.length; i++) {
 			orderService.updateOrderResult(odseq[i]);
 		}
-		
+
 		return "redirect:admin_order_list";
 	}
-	
+
 	/*
-	 *  회원목록 조회 처리
+	 * 회원목록 조회 처리
 	 */
-	
-	@RequestMapping(value="/admin_member_list")
-	public String adminMemberList(@RequestParam(value="key", defaultValue="") String name,
-									Model model) {
-		
+
+	@RequestMapping(value = "/admin_member_list")
+	public String adminMemberList(@RequestParam(value = "key", defaultValue = "") String name, Model model) {
+
 		List<MemberVO> listMember = memberService.listMember(name);
-		
+
 		model.addAttribute("memberList", listMember);
-		
+
 		return "admin/member/memberList";
 	}
-	
+
+	/*
+	 * 게시판 관리(QnA 목록조회 처리)
+	 */
+	@GetMapping(value = "/admin_qna_list")
+	public String adminQnaList(Model model) {
+
+		// QnA 목록을 테이블에서 조회
+		List<QnaVO> qnaList = qnaService.listAllQna();
+
+		// 조회 결과를 model 객체에 저장
+		model.addAttribute("qnaList", qnaList);
+
+		// QnA 화면 호출
+		return "admin/qna/qnaList";
+	}
+
+	/*
+	 * QnA 게시글 상세보기(관리자)
+	 */
+	@PostMapping(value = "/admin_qna_detail")
+	public String adminQnaDetail(QnaVO vo, Model model) {
+
+		// 게시글 일련번호를 조건으로 게시글 상세 조회
+		QnaVO qna = qnaService.getQna(vo.getQseq());
+
+		// 조회 결과를 model 객체에 저장
+		model.addAttribute("qnaVO", qna);
+
+		// 게시글 상세화면 호출
+		return "admin/qna/qnaDetail";
+	}
+
+	/*
+	 * QnA 관리자 답변 요청 처리
+	 */
+	@PostMapping(value = "/admin_qna_repsave")
+	public String adminQnaRepSave(QnaVO vo) {
+
+		// QnA 서비스의 Update 호출
+		qnaService.updateQna(vo);
+
+		// QnA 게시글 목록 호출
+		return "redirect:admin_qna_list";
+	}
 }

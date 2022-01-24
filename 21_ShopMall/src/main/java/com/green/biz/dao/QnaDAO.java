@@ -29,4 +29,14 @@ public class QnaDAO {
 		mybatis.insert("mappings.qna-mapping.insertQna", vo);
 	}
 
+	// 게시물 전체 조회(관리자)
+	public List<QnaVO> listAllQna() {
+		return mybatis.selectList("mappings.qna-mapping.listAllQna");
+	}
+
+	// 게시물 답변처리(관리자)
+	public void updateQna(QnaVO vo) {
+		mybatis.update("mappings.qna-mapping.updateQna", vo);
+	}
+
 }

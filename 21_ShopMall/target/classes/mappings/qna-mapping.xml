@@ -19,4 +19,16 @@
 		INSERT INTO qna(qseq, subject, content, id)
 		VALUES(qna_seq.NEXTVAL, #{subject}, #{content}, #{id})
 	</insert>
+	
+	<!-- 게시판 전체 조회(관리자) -->
+	<select id="listAllQna" resultType="qna">
+		SELECT * FROM qna
+			ORDER BY indate DESC
+	</select>
+	<!-- 게시판 답변 처리(관리자) -->
+	<update id="updateQna">
+		UPDATE qna 
+			SET reply=#{reply}, rep='2'
+				WHERE qseq=#{qseq}
+	</update>
 </mapper>
