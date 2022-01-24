@@ -21,5 +21,7 @@ public interface MemberService {
 	// 동이름으로 주소 찾기
 	public List<AddressVO> selectAddressByDong(String dong);
 	
+	// 회원 목록 조회(관리자)
+	public List<MemberVO> listMember(String name);
 
 }

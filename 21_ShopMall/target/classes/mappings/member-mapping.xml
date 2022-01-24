@@ -24,6 +24,13 @@
 	<select id="selectAddressByDong" resultType="address"> 
 		SELECT * FROM address WHERE dong LIKE '%'||#{dong}||'%'
 	</select>
+	
+	<!-- 회원 전체목록 조회 -->
+	<select id="listMember" resultType="member">
+		SELECT * FROM member
+			WHERE name LIKE '%'||#{name}||'%'
+				ORDER BY name
+	</select>
 
 </mapper>
 

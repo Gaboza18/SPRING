@@ -35,10 +35,15 @@ public class MemberServiceImpl implements MemberService {
 	public List<AddressVO> selectAddressByDong(String dong) {
 		return mDao.selectAddressByDong(dong);
 	}
-	
+
 	@Override
 	public int loginID(MemberVO vo) {
 		return mDao.loginID(vo);
+	}
+
+	@Override
+	public List<MemberVO> listMember(String name) {
+		return mDao.listMember(name);
 	}
 
 }

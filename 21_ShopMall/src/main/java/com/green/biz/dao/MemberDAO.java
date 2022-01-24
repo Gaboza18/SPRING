@@ -69,4 +69,9 @@ public class MemberDAO {
 	public List<AddressVO> selectAddressByDong(String dong) {
 		return mybatis.selectList("mappings.member-mapping.selectAddressByDong", dong);
 	}
+
+	// 회원 전체목록 조회(관리자)
+	public List<MemberVO> listMember(String name) {
+		return mybatis.selectList("mappings.member-mapping.listMember", name);
+	}
 }

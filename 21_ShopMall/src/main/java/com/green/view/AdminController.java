@@ -12,14 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.green.biz.admin.AdminService;
+import com.green.biz.dto.MemberVO;
 import com.green.biz.dto.OrderVO;
 import com.green.biz.dto.ProductVO;
 import com.green.biz.dto.WorkerVO;
+import com.green.biz.member.MemberService;
 import com.green.biz.order.OrderService;
 import com.green.biz.product.ProductService;
 
@@ -35,6 +38,9 @@ public class AdminController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	/*
 	 * 관리자 로그인 폼 구현
@@ -263,7 +269,7 @@ public class AdminController {
 	/*
 	 * 주문목록 조회 요청 처리
 	 */
-	@GetMapping(value = "/admin_order_list")
+	@RequestMapping(value = "/admin_order_list")
 	public String adminOrderList(@RequestParam(value = "key", defaultValue = "") String key, Model model) { // key 갑을 입력받아 실행한다 key, null 값
 
 		List<OrderVO> orderList = orderService.listOrder(key);
@@ -272,4 +278,34 @@ public class AdminController {
 
 		return "admin/order/orderList";
 	}
+	
+	/*
+	 *  주문완료 처리(입금확인)
+	 *  입력 파라미터: 입금확인한 result 필드의 상세주문번호(odseq) 배열이 전달됨
+	 */
+	@RequestMapping(value="/admin_order_save")
+	public String adminOrderSave(@RequestParam(value="result") int[] odseq) {
+		
+		for(int i=0; i<odseq.length; i++) {
+			orderService.updateOrderResult(odseq[i]);
+		}
+		
+		return "redirect:admin_order_list";
+	}
+	
+	/*
+	 *  회원목록 조회 처리
+	 */
+	
+	@RequestMapping(value="/admin_member_list")
+	public String adminMemberList(@RequestParam(value="key", defaultValue="") String name,
+									Model model) {
+		
+		List<MemberVO> listMember = memberService.listMember(name);
+		
+		model.addAttribute("memberList", listMember);
+		
+		return "admin/member/memberList";
+	}
+	
 }
