@@ -25,7 +25,7 @@
 		SELECT * FROM address WHERE dong LIKE '%'||#{dong}||'%'
 	</select>
 	
-	<!-- 회원 전체목록 조회 -->
+	<!-- 회원 전체목록 조회(관리자) -->
 	<select id="listMember" resultType="member">
 		SELECT * FROM member
 			WHERE name LIKE '%'||#{name}||'%'

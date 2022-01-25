@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,11 +24,15 @@ import com.green.biz.dto.MemberVO;
 import com.green.biz.dto.OrderVO;
 import com.green.biz.dto.ProductVO;
 import com.green.biz.dto.QnaVO;
+import com.green.biz.dto.SalesQuantity;
 import com.green.biz.dto.WorkerVO;
 import com.green.biz.member.MemberService;
 import com.green.biz.order.OrderService;
 import com.green.biz.product.ProductService;
 import com.green.biz.qna.QnaService;
+
+import utils.Criteria;
+import utils.PageMaker;
 
 @Controller
 @SessionAttributes("adminUser") // 다른 세션에서도 사용하기 위한 선언
@@ -108,7 +113,7 @@ public class AdminController {
 	/*
 	 * 관리자 상품리스트 조회
 	 */
-
+/*
 	@GetMapping(value = "/admin_product_list")
 	public String adminProductList(HttpSession session, Model model) {
 
@@ -127,7 +132,7 @@ public class AdminController {
 			return "admin/product/productList"; // 상품 리스트 화면으로 전송
 		}
 	}
-
+*/
 	/*
 	 * 상품 등록 페이지 표시
 	 */
@@ -195,7 +200,7 @@ public class AdminController {
 	 * 상품 상세 정보 출력
 	 */
 
-	@PostMapping(value = "/admin_product_detail") // #prod_form -> js (admin_product_detail action 실행)
+	@RequestMapping(value = "/admin_product_detail") // #prod_form -> js (admin_product_detail action 실행)
 	public String adminProductDetail(ProductVO vo, Model model) {
 
 		String[] kindList = { "", "Heels", "Boots", "Sandals", "Slipers", "Sneekers", "Sales" };
@@ -329,7 +334,7 @@ public class AdminController {
 	/*
 	 * 게시판 관리(QnA 목록조회 처리)
 	 */
-	@GetMapping(value = "/admin_qna_list")
+	@RequestMapping(value = "/admin_qna_list")
 	public String adminQnaList(Model model) {
 
 		// QnA 목록을 테이블에서 조회
@@ -370,4 +375,60 @@ public class AdminController {
 		// QnA 게시글 목록 호출
 		return "redirect:admin_qna_list";
 	}
+	
+	/*
+	 * 상품별 판매 실적 화면 출력
+	 */
+	@RequestMapping(value="/admin_sales_record_form")
+	public String adminProductSalesChart() {
+		return "admin/order/salesRecord";
+	}
+	
+	/*
+	 * 차트를 위한 상품별 판매 실적 조회(JSON 데이터 포맷 전송)
+	 */
+	@RequestMapping(value="/sales_record_chart",
+					produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public List<SalesQuantity> salesRecordChart(){
+		return productService.getProductSales();
+	}
+	
+	/*
+	 *  페이지별 상품 목록 조회요청 처리
+	 */
+	
+	@RequestMapping(value = "/admin_product_list")
+	public String adminProductList(@RequestParam(value = "key", defaultValue = "") String name, Criteria criteria,
+			HttpSession session, Model model) {
+
+		// 관리자 로그인 화면
+		WorkerVO adminUser = (WorkerVO) session.getAttribute("adminUser");
+
+		if (adminUser == null) { // 로그인이 안되어 있을경우
+			return "admin/main";
+		} else {
+
+			// 상품목록 조회 - 상품목록 10개만 조회(전체 제품을 이름으로 리스트 에서 1-10번까지 출력)
+			List<ProductVO> prodList = productService.getListWithPaging(criteria, name);
+
+			// 화면에 표시할 페이지 버튼 정보 설정
+			PageMaker pageMaker = new PageMaker();
+			int totalCount = productService.countProductList(name);
+
+			pageMaker.setCriteria(criteria); // 현재 페이지와 페이지당 항목 수 정보 설정
+			pageMaker.setTotalCount(totalCount); // 전체 상품품목 갯수 설정 및 페이지 정보 초기화
+
+			model.addAttribute("productList", prodList); // ${productList} 속성값에 담고 화면에 호출한다
+			model.addAttribute("productListSize", prodList.size());
+			model.addAttribute("pageMaker", pageMaker);
+
+			return "admin/product/productList"; // 상품 리스트 화면으로 전송
+		}
+	}
+	
+	
+	/*
+	 *  페이지별  주문 목록 조회요청 처리
+	 */
 }

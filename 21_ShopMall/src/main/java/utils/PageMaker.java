@@ -1,5 +1,8 @@
 package utils;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 /*
  *  화면에 표시할 페이지 버튼 정보 저장 클래스
  */
@@ -44,6 +47,18 @@ public class PageMaker {
 		// 이전버튼, 다음버튼 표시 여부 결정
 		prev = startPage == 1 ? false : true; // 시작페이지가 1페이지 일 경우 이전버튼 필요 없음
 		next = endPage * criteria.getRowsPerPage() < totalCount ? true : false;
+	}
+
+	/*
+	 * 화면에서 페이지 번호를 출력하면, 페이지 번호와 페이지당 항목 수를 이용하여 URL의 QueryString을 만들어 주는 메소드 ex)
+	 * ?pageNum=3&rowPerPage=10
+	 */
+	public String makeQuery(int page) {
+
+		UriComponents uriComp = UriComponentsBuilder.newInstance().queryParam("pageNum", page)
+				.queryParam("rowsPerPage", criteria.getRowsPerPage()).build();
+
+		return uriComp.toString();
 	}
 
 	// 멤버변수, Getter / Setter

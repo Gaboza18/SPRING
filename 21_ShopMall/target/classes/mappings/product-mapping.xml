@@ -63,5 +63,35 @@
 				content=#{content},image=#{image}, useyn=#{useyn},bestyn=#{bestyn}
 					WHERE pseq=#{pseq}
 	</select>
-
+	
+	<!-- 페이지별 상품목록 조회 -->
+	<select id="listWithPaging" parameterType="hashMap" resultType="product">
+	
+	<!-- <![CDATA["SQL 구문"]] : < > 등 sql문에 기호가 들어가면 오류 발생하기 때문 사용-->
+	<!-- 상품목록 10개만 조회(전체 제품을 이름으로 리스트 에서 1-10번까지 출력) -->
+	<![CDATA[
+	
+		SELECT pseq,regdate,name,price1,price2,useyn,bestyn
+		    FROM
+		        (SELECT row_number() over(ORDER BY name) rn,pseq,regdate,name,price1,price2,useyn,bestyn
+		         	FROM product
+		            	WHERE name LIKE '%'||#{name}||'%')
+         		WHERE rn<=#{criteria.pageNum} * #{criteria.rowsPerPage} 
+         			AND rn>(#{criteria.pageNum}-1) * #{criteria.rowsPerPage}
+    ]]>   		
+	</select>
+	
+	<!-- 제품 판매실적을 위한 데이터 매핑 -->
+	<resultMap type="com.green.biz.dto.SalesQuantity" id="salesMap">
+		<result column="pname" property="pname"/>
+		<result column="sales_count" property="quantity"/>
+	</resultMap>
+	
+	<!-- 제품별 판매 실적 조회 -->
+	<select id="getProductSales" resultMap="salesMap">
+		SELECT pname,SUM(quantity) AS sales_count
+			FROM order_view
+				WHERE result='2' GROUP BY pname
+	</select>
+	
 </mapper>

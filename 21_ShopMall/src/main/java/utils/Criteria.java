@@ -52,8 +52,8 @@ public class Criteria {
 	
 	/*
 	 *  각 페이지에서 시작하는 항목번호를 반환
-	 *  ex) 1페이지 - 1
-	 *   	2페이지 - 11, ....
+	 *  ex) 1페이지 - 1,2,3,4...10
+	 *   	2페이지 - 11,12,13,14....20
 	 */
 	public int getPageStart() {
 		return (pageNum - 1) * rowsPerPage + 1;

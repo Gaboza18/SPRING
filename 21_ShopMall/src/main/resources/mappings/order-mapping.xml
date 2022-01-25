@@ -48,4 +48,13 @@
 				WHERE odseq=#{odseq}
 	</update>
 	
+	<!-- 페이지별  주문목록 조회-->
+	<!-- 
+	<select id="listWithAPaging" parameterType="hashMap" resultType="orderPaging">
+	<![CDATA[
+			
+	]]>
+	</select>
+	 -->
+	
 </mapper>

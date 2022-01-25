@@ -14,7 +14,7 @@
      <input class="btn" type="button" name="btn_search" value="검색" onClick="go_search()">
      <input class="btn" type="button" name="btn_total" value="전체보기 " onClick="go_total()">
      <input class="btn" type="button" name="btn_write" value="상품등록" onClick="go_wrt()">
-     <input class="btn" type="button" name="btn_chart" value="상품별 실적" onClick="location.href='admin_product_sales_chart'">
+     <input class="btn" type="button" name="btn_chart" value="상품별 실적" onClick="location.href='admin_sales_record_form'">
   </td>
   </tr>
 </table>
@@ -35,7 +35,7 @@
     <tr>
       <td height="23" align="center" >${productVO.pseq}</td>
       <td style="text-align: left; padding-left: 50px; padding-right: 0px;">   
-       <%-- <a href="admin_product_detail${pageMaker.makeQuery(pageMaker.cri.pageNum)}&pseq=${productVO.pseq}"> --%> 
+        <a href="admin_product_detail${pageMaker.makeQuery(pageMaker.criteria.pageNum)}&pseq=${productVO.pseq}"/> 
 		<a href="#" onclick="go_detail('${productVO.pseq}')"> 
     	 ${productVO.name}     
    		</a>
@@ -56,6 +56,6 @@
 </c:choose>  
 </table>
 </form> 
-<%-- <%@ include file="../page_area.jsp" %> --%>
+ <%@ include file="../page_area.jsp" %>
 </article>
 <%@ include file="../footer.jsp" %>
