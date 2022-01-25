@@ -391,7 +391,13 @@ public class AdminController {
 					produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public List<SalesQuantity> salesRecordChart(){
-		return productService.getProductSales();
+		
+		List<SalesQuantity> listSales = productService.getProductSales();
+		
+		for(SalesQuantity item:listSales) {
+			System.out.println(item);
+		}
+		return listSales;
 	}
 	
 	/*
