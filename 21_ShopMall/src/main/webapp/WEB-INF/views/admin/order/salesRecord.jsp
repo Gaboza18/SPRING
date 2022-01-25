@@ -13,7 +13,7 @@
 				"Content-type" : "application/json; charset=utf-8"
 			},
 			url : 'sales_record_chart',
-			success : function(result) { // result : controller 에서 전달된 데이터
+			success : function(result) { // result : controller 에서 전달된 데이터 전달
 
 				// 최신 버전의 구글 코어차트 패키지를 메모리로 로드
 				google.charts.load('current', {
